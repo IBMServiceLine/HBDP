@@ -1,12 +1,15 @@
 package com.service.rest;
 
+import java.util.logging.Logger;
+
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.cloudant.client.api.model.Response;
 import com.dao.UserDao;
 import com.dao.UserDaoImpl;
 import com.data.BodyLabsResponse;
@@ -23,10 +26,12 @@ public class MeasurementService {
 
 	UserDao userDao = new UserDaoImpl();
 
+	private static Logger LOGGER = Logger.getLogger(MeasurementService.class.getName());
+
 	/**
 	 * Restful web service method to create user in the HBDP application.
 	 * 
-	 * @param user
+	 * @param newUser
 	 *            the application user details.
 	 * @return
 	 * @throws MeasurementServiceException
@@ -36,15 +41,17 @@ public class MeasurementService {
 	@Path("createUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response createUser(User user)
-			throws MeasurementServiceException, BodyLabsServiceException {
+	public User createUser(User newUser) throws MeasurementServiceException, BodyLabsServiceException {
+		LOGGER.info("START: createUser(user id = " + newUser.get_id() + ")");
 
 		// Get measurements from body lab
-		BodyLabsResponse bodyLabsResponse = labsService
-				.retrieveMeasurements(user.getDetails().getInput());
+		BodyLabsResponse bodyLabsResponse = labsService.retrieveMeasurements(newUser.getDetails().getInput());
+		newUser.setDetails(bodyLabsResponse);
+
+		LOGGER.info("END: createUser() ==> user id = " + newUser.get_id());
 
 		// Create user in the app with the details retrieved from body lab.
-		return userDao.createUser(bodyLabsResponse);
+		return userDao.createUser(newUser);
 
 	}
 
@@ -61,19 +68,15 @@ public class MeasurementService {
 	@Path("updateUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public BodyLabsResponse updateUser(User user)
-			throws MeasurementServiceException, BodyLabsServiceException {
-
-		// Check if the user exists.
-		userDao.getUserDetails(user.getUserId());
+	public User updateUser(User user) throws MeasurementServiceException, BodyLabsServiceException {
 
 		// Get measurements from body lab
-		BodyLabsResponse bodyLabsResponse = labsService
-				.retrieveMeasurements(user.getDetails().getInput());
+		BodyLabsResponse bodyLabsResponse = labsService.retrieveMeasurements(user.getDetails().getInput());
+		user.setDetails(bodyLabsResponse);
 
 		// Create user in the app with the details retrieved from body lab.
-		return userDao.updateUser(user.getUserId(), bodyLabsResponse)
-				.getDetails();
+		// return userDao.updateUser(user);
+		return user;
 	}
 
 	/**
@@ -82,15 +85,13 @@ public class MeasurementService {
 	 * @return
 	 * @throws MeasurementServiceException
 	 */
-	@POST
-	@Path("retrieveMeasurements")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public BodyLabsResponse retrieveMeasurements(Long userId)
-			throws MeasurementServiceException {
+	@Path("findUser/{apiUserId}")
+	public User findUser(@PathParam("apiUserId") String apiUserId) throws MeasurementServiceException {
 
 		// Get user details stored in the app.
-		return userDao.getUserDetails(userId).getDetails();
+		return userDao.getUserDetails(apiUserId);
 
 	}
 }

@@ -1,16 +1,14 @@
 package com.dao;
 
-import com.cloudant.client.api.model.Response;
-import com.data.BodyLabsResponse;
 import com.data.User;
 import com.exception.MeasurementServiceException;
 
 public interface UserDao {
 
-	User getUserDetails(Long userId) throws MeasurementServiceException;
+	User createUser(User newUser) throws MeasurementServiceException;
 
-	Response createUser(BodyLabsResponse bodyLabsResponse) throws MeasurementServiceException;
+	User updateUser(User user) throws MeasurementServiceException;
 
-	User updateUser(Long userId, BodyLabsResponse bodyLabsResponse) throws MeasurementServiceException;
+	User getUserDetails(String apiUserId) throws MeasurementServiceException;
 
 }

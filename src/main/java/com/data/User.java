@@ -9,16 +9,16 @@ package com.data;
  */
 public class User {
 
-	Long userId;
+	String _id;
 
 	BodyLabsResponse details;
 
-	public Long getUserId() {
-		return userId;
+	public String get_id() {
+		return _id;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void set_id(String _id) {
+		this._id = _id;
 	}
 
 	public BodyLabsResponse getDetails() {
@@ -28,8 +28,5 @@ public class User {
 	public void setDetails(BodyLabsResponse details) {
 		this.details = details;
 	}
-
-	
-	
 
 }
