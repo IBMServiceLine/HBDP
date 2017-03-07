@@ -1,0 +1,35 @@
+{
+   "Object-Storage": [
+      {
+         "name": "OBJS_HBDP",
+         "label": "Object-Storage",
+         "plan": "standard",
+         "credentials": {
+            "auth_url": "https://identity.open.softlayer.com",
+            "project": "object_storage_c1ca1674_c908_4fcd_b4eb_6eb849de7094",
+            "projectId": "bad9908ac16c47cb94a4d8cc0cb0e8e1",
+            "region": "dallas",
+            "userId": "4bf51b4fdf2e4fb0af1d4468ab905b58",
+            "username": "admin_ee125b402e43d2a511e841df8155e2c24c8eb0d0",
+            "password": "zHyd8r~(-FN9W5hP",
+            "domainId": "fe073af49b1146f093ba73db2713a7a9",
+            "domainName": "765999",
+            "role": "admin"
+         }
+      }
+   ],
+   "cloudantNoSQLDB": [
+      {
+         "name": "HBDP_cloudant",
+         "label": "cloudantNoSQLDB",
+         "plan": "Shared",
+         "credentials": {
+            "username": "897f81ce-23df-4821-8383-00df5729697e-bluemix",
+            "password": "1153e2ef46c94f00bae400d4d1614ba86208e8261bc86973143b01488225f53e",
+            "host": "897f81ce-23df-4821-8383-00df5729697e-bluemix.cloudant.com",
+            "port": 443,
+            "url": "https://897f81ce-23df-4821-8383-00df5729697e-bluemix:1153e2ef46c94f00bae400d4d1614ba86208e8261bc86973143b01488225f53e@897f81ce-23df-4821-8383-00df5729697e-bluemix.cloudant.com"
+         }
+      }
+   ]
+}
