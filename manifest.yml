@@ -1,0 +1,11 @@
+applications:
+- path: target/HBDPApp.war
+  memory: 512M
+  instances: 1
+  domain: mybluemix.net
+  name: HBDP
+  host: hbdp
+  disk_quota: 1024M
+  services:
+  - OBJS_HBDP
+  - HBDP_cloudant
